@@ -1,0 +1,18 @@
+
+
+
+.nav{
+    margin: .5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.nav a{
+    text-decoration: none;
+color: white;
+font-family: 'Ubuntu', sans-serif;
+font-size: 2rem;
+font-weight: 600;
+
+}
