@@ -1,18 +1,19 @@
 import "./homepage.css"
-import Navbar from "./Navbar"
-import { skipToken } from "@reduxjs/toolkit/query";
+
+
 import { useState, useEffect } from "react"
 import {
-    useGetRandomQuery
+    useGetRandomQuery, useGetTagsQuery, useGetCategory
 } from "../store/features/api/apiSlice"
 
 
 
 
 const Homepage = () => {
+    
 
-
-
+    const [selTag, setSelTag] = useState("")
+    
     const {
         data: quotes,
         isLoading,
@@ -20,7 +21,17 @@ const Homepage = () => {
         isError,
         error,
         refetch
-    } = useGetRandomQuery()
+    } = useGetRandomQuery(selTag)
+
+    const handleTagChange = (e) => {
+        setSelTag(e)
+        refetch()
+    }
+
+    const {
+        data: tags,
+        isSuccess: success
+    } = useGetTagsQuery()
 
 
     function handleRefetch() {
@@ -30,9 +41,10 @@ const Homepage = () => {
 
 
 
+
     let content;
     if (isLoading) {
-        content = <p>Loading...</p>
+        content = <p className="loading">Loading...</p>
     } else if (isSuccess) {
 
         content =
@@ -40,9 +52,19 @@ const Homepage = () => {
                 <div className="quote">
                     <p className="quote-text">{quotes.content}</p>
                     <p className="author">-{quotes.author}</p>
-                    <i className="fas fa-bookmark fa-2x ms-5"></i>
+                    <i className="fas fa-bookmark fa-2x ms-5" onClick={handleBookmark}></i>
 
                 </div>
+                <select name="tags" id="tags" value={selTag} onChange={(e) => handleTagChange(e.target.value)}>
+                    <option value="">Select tag</option>
+                    {success ? (tags.map(tag => {
+                        return (
+
+                            <option key={tag._id} value={tag.name}>{tag.slug}</option>
+
+                        )
+                    })) : "null"}
+                </select>
                 <button className="nxt-quote" onClick={handleRefetch} >Next Quote</button>
 
             </div>
@@ -51,7 +73,12 @@ const Homepage = () => {
         content = <p>{error}</p>
     }
 
-
+    function handleBookmark() {
+        var bookMarkArray = []
+        bookMarkArray = JSON.parse(localStorage.getItem('quotes')) || [];
+        bookMarkArray.push(quotes)
+        localStorage.setItem("quotes", JSON.stringify(bookMarkArray))
+    }
 
 
 
@@ -60,7 +87,7 @@ const Homepage = () => {
 
     return (
         <>
-            <Navbar />
+
             {content}
         </>
     )

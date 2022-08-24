@@ -6,11 +6,15 @@ export const apiSlice = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: "https://api.quotable.io" }),
     endpoints: (builder) => ({
       getRandom: builder.query({
-        query: () => '/random'
+        query: (tag) => (`/random?tags=${tag}`)
       }),
+      getTags:builder.query({
+        query:() => '/tags'
+      })
     }),
   })
 
   export const {
-    useGetRandomQuery
+    useGetRandomQuery,
+    useGetTagsQuery
   }= apiSlice

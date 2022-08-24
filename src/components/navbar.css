@@ -16,3 +16,8 @@ font-size: 2rem;
 font-weight: 600;
 
 }
+
+a:hover{
+transform: scale(.95);
+color:#06d6a0;
+}

@@ -1,0 +1,35 @@
+body{
+    background-color: #7209b7;
+}
+
+
+.quote-box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white  ;
+    height: 50vh;
+  
+  }
+  
+  .quote{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color:red;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    width: 60%;
+    font-weight: 600;
+    font-size: 1.2rem;
+    height:40vh;
+  
+  }
+
+  .quote p:nth-child(2){
+    color:#cbc0d3;
+
+  }
